@@ -42,7 +42,7 @@ echo
 for h in /etc/pacman.d/hooks/*.hook /usr/share/libalpm/hooks/*.hook; do
     [ -e "$h" ] || continue
     basename "$h"
-done | sort | grep -E 'limine|mkinitcpio|dkms|surface' | sed 's/^/      /'
+done | sort | grep -E 'limine|mkinitcpio|dkms|surface' | sed 's/^/      /' || true
 echo
 echo "    It therefore sees the final state, not an intermediate one."
 

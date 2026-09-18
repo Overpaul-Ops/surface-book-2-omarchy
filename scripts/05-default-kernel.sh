@@ -84,7 +84,10 @@ say "Step 1: current boot order"
 CURRENT=""
 for f in /etc/limine-entry-tool.conf /etc/limine-entry-tool.d/*.conf /etc/default/limine; do
     [ -r "$f" ] || continue
-    v=$(grep -hE '^[[:space:]]*BOOT_ORDER=' "$f" 2>/dev/null | tail -1 | sed -E 's/^[^=]*=//; s/^"//; s/"$//')
+    # `|| true` is not decoration: grep exits 1 when a file has no BOOT_ORDER,
+    # pipefail passes that to the assignment, and set -e would abort the whole
+    # script on the first config file that simply does not set it.
+    v=$(grep -hE '^[[:space:]]*BOOT_ORDER=' "$f" 2>/dev/null | tail -1 | sed -E 's/^[^=]*=//; s/^"//; s/"$//' || true)
     [ -n "$v" ] && { CURRENT="$v"; SRC="$f"; }
 done
 
@@ -102,14 +105,17 @@ say "Step 2: new boot order"
 
 # Drop any existing mention of the surface kernel, then put it in front.
 # Keeping the rest untouched means the distribution kernel stays right below.
+# `|| true` again: if BOOT_ORDER contained nothing but the surface kernel,
+# grep -v would output nothing and exit 1.
 REST=$(printf '%s' "$CURRENT" \
     | tr ',' '\n' \
     | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//' \
     | grep -vx "$SURFACE" \
     | grep -vx "${SURFACE}\*" \
     | paste -sd ',' - \
-    | sed 's/,/, /g')
+    | sed 's/,/, /g' || true)
 
+[ -n "$REST" ] || REST="*, *fallback, Snapshots"
 NEW="${SURFACE}, ${REST}"
 echo "    new:  $NEW"
 echo

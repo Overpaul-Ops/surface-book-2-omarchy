@@ -47,7 +47,7 @@ done
 
 SBF=$(ls /sys/firmware/efi/efivars/SecureBoot-* 2>/dev/null | head -1)
 if [ -n "$SBF" ]; then
-    SB=$(od -An -t u1 "$SBF" 2>/dev/null | awk '{print $5}')
+    SB=$(od -An -t u1 "$SBF" 2>/dev/null | awk '{print $5}' || true)
     [ "$SB" = "1" ] && die "Secure Boot is ENABLED. linux-surface is unsigned and will not boot. Disable it in firmware, or use linux-surface-secureboot-mok."
     ok "Secure Boot disabled"
 fi
@@ -116,7 +116,8 @@ say "Step 4: what will be installed"
 sudo pacman -Sy || die "database sync failed"
 echo
 for p in "${PKGS[@]}"; do
-    info=$(pacman -Si "$p" 2>/dev/null | awk -F': +' '/^Repository/{r=$2} /^Version/{v=$2} /^Installed Size/{s=$2} END{printf "%-14s %-20s %s", r, v, s}')
+    # pacman -Si exits 1 for an unknown package; pipefail would abort here.
+    info=$(pacman -Si "$p" 2>/dev/null | awk -F': +' '/^Repository/{r=$2} /^Version/{v=$2} /^Installed Size/{s=$2} END{printf "%-14s %-20s %s", r, v, s}' || true)
     printf '      %-26s %s\n' "$p" "${info:-NOT FOUND}"
 done
 echo
