@@ -95,27 +95,76 @@ from anything that goes wrong.
 
 ## Quick start
 
-Clone, then run the scripts in order. Each one stops and asks before it
-changes anything important, and each one can be run again safely.
-
 ```sh
 git clone https://github.com/<you>/surface-book-2-omarchy.git
 cd surface-book-2-omarchy
 
-bash scripts/00-survey.sh            # read-only: what does your machine look like?
-bash scripts/01-detach-setup.sh      # detach + dGPU handling
-bash scripts/02-kernel-install.sh    # linux-surface, then reboot and pick it
-bash scripts/03-tablet-setup.sh      # on-screen keyboard, trackpad, rotation
-bash scripts/04-maintenance-setup.sh # automatic health check after updates
+bash scripts/00-survey.sh   # read-only: what does your machine look like?
+./install.sh                # then this, as often as it takes
 ```
 
-**Run them as your normal user, not with `sudo`.** They call `sudo` themselves
-where it is needed. `yay` refuses to run as root, and one of the steps needs
-it.
+`install.sh` shows you where you stand and does everything that can be done
+right now:
 
-Start with `00-survey.sh` even if you plan to do everything by hand. It
-changes nothing and tells you which of the assumptions below hold on *your*
-machine.
+```
+Surface Book 2 on Omarchy — setup status
+
+  [✓]  Detach         Detach and re-attach the display safely
+  [✓]  Kernel         linux-surface, for the touchscreen
+  [!]  Tablet         On-screen keyboard, trackpad, rotation
+       installed, but needs a reboot to take effect
+  [ ]  Maintenance    Health check after every update
+
+  running kernel: 6.19.8-arch1-3-surface (touchscreen available)
+
+  Next: reboot (step 3 (Tablet) needs it), then run ./install.sh again.
+```
+
+| | |
+|---|---|
+| `./install.sh` | status, then a menu |
+| `./install.sh --all` | everything possible, stopping at the next reboot |
+| `./install.sh --status` | just look |
+| `./install.sh --dry-run` | what would happen, changing nothing |
+| `./install.sh --step 3` | one specific step |
+
+**Run it as your normal user, not with `sudo`.** It calls `sudo` where needed,
+and `yay` refuses to run as root.
+
+**It cannot all happen in one go**, and no script can change that. Three
+points genuinely require a reboot before the next step means anything:
+
+```
+  step 1  detach          /etc/environment only applies at login
+             ▼ reboot
+  step 2  kernel          touch needs the new kernel RUNNING
+             ▼ reboot, and pick it in the boot menu — only you can do that
+  step 3  tablet mode     the 'input' group only applies at login
+             ▼ reboot
+  step 4  maintenance
+```
+
+So `install.sh` stops cleanly at each boundary, offers to reboot, and resumes
+where it left off next time. **It reads your system rather than a file it
+wrote earlier**, so it still tells the truth if you did part of it by hand or
+came back a month later.
+
+The five scripts under `scripts/` also work on their own if you prefer that.
+
+Start with `00-survey.sh` either way. It changes nothing and tells you which
+of the assumptions below hold on *your* machine.
+
+### Afterwards: make it the default
+
+Until you do this, the boot menu still picks your old kernel when the
+countdown runs out — so no touchscreen unless you catch the menu every time.
+
+```sh
+./install.sh --step 5
+```
+
+Deliberately not part of `--all`. Give the new kernel a few days first. See
+[docs/06-default-kernel.md](docs/06-default-kernel.md).
 
 ---
 
@@ -137,6 +186,8 @@ it needs no kernel change at all.
    on-screen keyboard, virtual trackpad, auto-rotation.
 5. **[Maintenance](docs/05-maintenance.md)** — a health check that runs itself
    after every kernel or bootloader update.
+6. **[Booting linux-surface by default](docs/06-default-kernel.md)** — once it
+   has earned your trust, so you stop having to catch the boot menu.
 
 Two more worth reading:
 
