@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Run a program on the NVIDIA discrete GPU instead of the Intel iGPU.
+#
+#   nvidia-run steam
+#   nvidia-run glxinfo -B
+#
+# Needed because the setup in this repository points GLVND at Mesa by default,
+# so nothing opens the dGPU at idle and it can be unloaded before detaching.
+# This flips the environment back for one program.
+#
+# nvidia-modprobe is setuid, so the driver is loaded on demand even if the
+# detach handler unloaded it earlier.
+#
+# Part of https://github.com/<you>/surface-book-2-omarchy - MIT licensed.
+[ $# -gt 0 ] || { echo "usage: nvidia-run <program> [args...]" >&2; exit 2; }
+exec env \
+    __NV_PRIME_RENDER_OFFLOAD=1 \
+    __GLX_VENDOR_LIBRARY_NAME=nvidia \
+    __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/10_nvidia.json \
+    __VK_LAYER_NV_optimus=NVIDIA_only \
+    VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json \
+    "$@"

@@ -1,0 +1,13 @@
+# Let the discrete GPU power down when idle (D3cold).
+#
+# Without this, power/control sits at "on" and the card stays at D0 forever,
+# which on a Surface Book 2 means it is still live when you detach the base.
+#
+# vendor 0x10de = NVIDIA
+# class  0x030000 = VGA controller, 0x030200 = 3D controller
+#
+# Part of https://github.com/<you>/surface-book-2-omarchy - MIT licensed.
+ACTION=="bind",   SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="bind",   SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"

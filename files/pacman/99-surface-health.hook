@@ -1,0 +1,33 @@
+# Check the Surface setup after anything touches the kernels or the bootloader.
+# Install as /etc/pacman.d/hooks/99-surface-health.hook
+#
+# Reports only. It can never make an update fail.
+#
+# The 99- prefix matters: pacman runs hooks in alphabetical order, so this
+# lands after 99-omarchy-limine (which regenerates limine.conf) and after
+# every mkinitcpio and dkms hook. It sees the final state.
+#
+# Part of https://github.com/<you>/surface-book-2-omarchy - MIT licensed.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = linux-surface
+Target = linux-surface-headers
+Target = linux-omarchy
+Target = linux-omarchy-headers
+Target = linux
+Target = linux-lts
+Target = limine
+Target = limine-mkinitcpio-hook
+Target = limine-snapper-sync
+Target = nvidia-dkms
+Target = nvidia-open-dkms
+Target = nvidia-580xx-dkms
+Target = iptsd
+
+[Action]
+Description = Surface Book 2: checking boot configuration...
+When = PostTransaction
+Exec = /usr/local/bin/surface-health-check --hook
