@@ -9,7 +9,7 @@
 # Brings the discrete GPU back: waits for the PCI bus to re-enumerate the
 # base, reloads the NVIDIA modules, and re-enables runtime power management.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 DGPU_ADDR=""          # empty = detect automatically
 

@@ -1,4 +1,4 @@
-# Step 1 — Survey
+# Step 1: Survey
 
 ```sh
 bash scripts/00-survey.sh
@@ -13,9 +13,10 @@ machine, and several of them decide how much work is ahead of you.
 ### Does `/dev/surface/dtx` exist?
 
 The single most useful thing to know. If it does, your kernel already has the
-detach driver and **you can do all of [step 2](02-detach.md) without touching
-the kernel at all**. On the reference machine it did, which was a pleasant
-surprise — Omarchy ships the complete Surface aggregator stack.
+detach driver and you can do all of [step 2](02-detach.md) without touching
+the kernel at all. On the reference machine it did, which was a pleasant
+surprise, because it means Omarchy ships the complete Surface aggregator
+stack.
 
 If it does not, do [step 3](03-kernel.md) first.
 
@@ -32,7 +33,7 @@ discrete GPU: 0000:02:00.0
 powers down, and it is still live when you detach the base. That is the
 problem step 2 solves.
 
-No NVIDIA GPU at all is a simpler life — the GPU parts are skipped.
+No NVIDIA GPU at all is a simpler life, because the GPU parts are skipped.
 
 ### Who is holding the GPU open?
 
@@ -56,7 +57,7 @@ Under 500 MB free, clean up before adding a second kernel.
 
 A known trap: `/boot/limine.conf` and `/boot/EFI/limine/limine.conf` drifting
 apart, so a kernel update leaves you with a config pointing at files that no
-longer exist. If the survey finds two, resolve which one is live **before**
+longer exist. If the survey finds two, resolve which one is live before
 step 3.
 
 ### Does `BOOT_ORDER` have a wildcard?
@@ -65,7 +66,7 @@ step 3.
 BOOT_ORDER="linux-t2, linux-omarchy, linux-omarchy-*, *, *fallback, Snapshots"
 ```
 
-That `*` is why no hand-written boot entry is needed on Omarchy — see
+That `*` is why no hand-written boot entry is needed on Omarchy. See
 [findings #7](findings.md#7-on-omarchy-the-boot-entry-writes-itself).
 
 ### Is Snapper set up?
@@ -80,5 +81,3 @@ Keep it. Comparing before and after is how you tell what a step actually did.
 ```sh
 bash scripts/00-survey.sh > survey-before.txt
 ```
-
-It is also the right thing to attach to an issue.

@@ -21,7 +21,7 @@
 # and runtime PM off, the GPU sits at D0 permanently and that check blocks
 # every detach forever.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 # ---------------------------------------------------------------------------
 # Settings

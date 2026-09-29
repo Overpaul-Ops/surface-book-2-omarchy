@@ -13,7 +13,7 @@
 # Run as root for the full picture: /boot is not readable by normal users on
 # Omarchy, so checks 2 and 3 need it.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 MODE="${1:-}"
 LIMINE_CONF="${LIMINE_CONF:-/boot/limine.conf}"

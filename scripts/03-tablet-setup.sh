@@ -13,7 +13,7 @@
 # It modifies /etc/pam.d/, i.e. how you authenticate. If you want it, install
 # it yourself, knowingly.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 set -euo pipefail
 

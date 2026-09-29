@@ -1,3 +1,3 @@
-# survey output people generate locally before opening an issue
+# survey output people generate locally
 survey*.txt
 *.local

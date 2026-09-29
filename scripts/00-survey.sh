@@ -7,12 +7,12 @@
 # hold on your device.
 #
 #     bash scripts/00-survey.sh
-#     bash scripts/00-survey.sh > survey.txt    # to attach to an issue
+#     bash scripts/00-survey.sh > survey.txt    # keep a copy for comparison
 #
 # Some checks need root (on Omarchy /boot is mode 0700). The script asks for
 # sudo once and skips those parts if you decline.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 hdr() { printf '\n\033[1;34m=== %s ===\033[0m\n' "$*"; }
 note() { printf '    %s\n' "$*"; }

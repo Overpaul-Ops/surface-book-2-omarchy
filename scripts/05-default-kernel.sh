@@ -22,7 +22,7 @@
 # rather than generated output. limine-entry-tool then places linux-surface
 # first by itself, and default_entry follows along.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 set -euo pipefail
 
@@ -130,7 +130,7 @@ sudo tee "$DROPIN" >/dev/null <<EOF_DROPIN
 # Boot the linux-surface kernel by default.
 #
 # Written by scripts/05-default-kernel.sh from
-# https://github.com/<you>/surface-book-2-omarchy
+# https://github.com/Overpaul-Ops/surface-book-2-omarchy
 #
 # This is a drop-in, not an edit of limine.conf: limine-entry-tool regenerates
 # limine.conf on every kernel update, so an edit there would be lost. A

@@ -7,7 +7,7 @@
 # lands after 99-omarchy-limine (which regenerates limine.conf) and after
 # every mkinitcpio and dkms hook. It sees the final state.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy - MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy - MIT licensed.
 [Trigger]
 Operation = Install
 Operation = Upgrade

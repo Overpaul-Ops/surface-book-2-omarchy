@@ -12,7 +12,7 @@
 # nvidia-modprobe is setuid, so the driver is loaded on demand even if the
 # detach handler unloaded it earlier.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy - MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy - MIT licensed.
 [ $# -gt 0 ] || { echo "usage: nvidia-run <program> [args...]" >&2; exit 2; }
 exec env \
     __NV_PRIME_RENDER_OFFLOAD=1 \

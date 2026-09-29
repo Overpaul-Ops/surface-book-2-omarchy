@@ -23,7 +23,7 @@ This is exactly why `default_entry` is left pointing at the original kernel
 until the new one has proven itself over several days.
 
 Once you are back in, `sudo surface-health-check` will usually name the
-problem — most often a boot entry whose `cmdline` lost `cryptdevice=` or
+problem, most often a boot entry whose `cmdline` lost `cryptdevice=` or
 `rootflags=subvol=`.
 
 ### The boot menu does not show linux-surface
@@ -92,13 +92,13 @@ busctl --system get-property org.surface.dtx /org/surface/dtx org.surface.dtx De
 busctl --system get-property org.surface.dtx /org/surface/dtx org.surface.dtx LatchStatus
 ```
 
-### "Detach aborted — the graphics card is still in use"
+### "Detach aborted", the graphics card is still in use
 
 Working as intended. The notification names the processes. Close them and
 press again.
 
-If it names your **compositor**, the `/etc/environment` part of step 1 has not
-taken effect. Reboot (not just log out — see
+If it names your compositor, the `/etc/environment` part of step 1 has not
+taken effect. Reboot (not just log out, see
 [findings #10](findings.md#10-logging-out-does-not-apply-a-group-change-when-autologin-is-on)),
 then check:
 
@@ -121,7 +121,7 @@ cat /sys/bus/pci/devices/<addr>/power/control  # "on"?
 ```
 
 `D0` plus `on` means the card never powers down and that handler can never
-succeed. Use the one in this repository instead — see
+succeed. Use the one in this repository instead, see
 [findings #2](findings.md#2-the-suggested-detach-handler-blocks-every-detach).
 
 ### No notifications at all
@@ -235,8 +235,8 @@ id | grep input          # is it in THIS session?
 getent group input       # is it in the system database?
 ```
 
-If it is in the database but not in your session: **reboot**. Logging out is
-not enough with autologin — see
+If it is in the database but not in your session, reboot. Logging out is
+not enough with autologin, see
 [findings #10](findings.md#10-logging-out-does-not-apply-a-group-change-when-autologin-is-on).
 
 If the service is stuck in `failed` after enough restart attempts:
@@ -250,7 +250,7 @@ systemctl --user start ydotool.service
 
 That is exactly the split between the two tools: `wtype` handles text,
 `ydotool` handles combinations the compositor grabs for itself. So `ydotool`
-is the broken half — see above.
+is the broken half, see above.
 
 ### The virtual trackpad does nothing
 
@@ -309,18 +309,3 @@ sudo surface-health-check
 With the pacman hook installed this runs on its own; look for the
 `Surface: ...` line at the end of the update output.
 
----
-
-## Getting help
-
-If none of this covers it, the output of
-
-```sh
-bash scripts/00-survey.sh > survey.txt
-```
-
-is the most useful thing to attach to an issue. It is read-only and contains
-no secrets — but read it before you post it.
-
-Include which kernel you booted, whether the problem appears on both kernels,
-and what you last changed.

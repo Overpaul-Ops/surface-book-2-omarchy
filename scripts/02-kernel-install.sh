@@ -11,7 +11,7 @@
 # Your existing kernel stays installed and stays the default. linux-surface is
 # added next to it, and you pick at boot.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 set -euo pipefail
 

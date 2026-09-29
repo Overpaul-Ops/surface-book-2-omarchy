@@ -14,7 +14,7 @@
 # This replaces the "remember to check these three things after every update"
 # advice that every guide gives and nobody follows.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 set -euo pipefail
 

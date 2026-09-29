@@ -17,7 +17,7 @@
 # still tells the truth if you did some of it by hand, re-cloned the repo,
 # or came back a month later.
 #
-# Part of https://github.com/<you>/surface-book-2-omarchy — MIT licensed.
+# Part of https://github.com/Overpaul-Ops/surface-book-2-omarchy — MIT licensed.
 
 set -uo pipefail
 

@@ -1,4 +1,4 @@
-# Step 3 — The linux-surface kernel
+# Step 3: The linux-surface kernel
 
 ```sh
 bash scripts/02-kernel-install.sh
@@ -21,10 +21,10 @@ Your distribution kernel has no `ipts` module. `linux-surface` does.
 
 ## What it costs
 
-`linux-surface` is **older** than your distribution kernel, not newer. On the
+`linux-surface` is older than your distribution kernel, not newer. On the
 reference machine, 6.19.8 against Omarchy's 7.2.5.
 
-Measured, not guessed: of 206 loaded modules, exactly one was missing — an
+Measured, not guessed: of 206 loaded modules, exactly one was missing, an
 Intel power-telemetry module with no device function. Everything else that
 appeared missing was compiled into the kernel instead of shipped as a file.
 See [findings #5](findings.md#5-linux-surface-is-older-than-your-distribution-kernel),
@@ -39,9 +39,9 @@ Omarchy
   └─ Snapshots
 ```
 
-Same operating system, same files, same home directory, same everything —
-only the kernel differs. `/etc/os-release` does not change. Your existing
-entry is your way back from anything that goes wrong.
+Same operating system, same files, same home directory, same everything. Only
+the kernel differs. `/etc/os-release` does not change. Your existing entry is
+your way back from anything that goes wrong.
 
 ## The key fingerprint
 
@@ -75,9 +75,9 @@ The script prints everything you need. Check:
 
 Point 4 is the one that would leave you with a system that cannot unlock its
 own disk. On Omarchy the entry is generated automatically and came out
-byte-identical — see
-[findings #7](findings.md#7-on-omarchy-the-boot-entry-writes-itself) — but
-check anyway.
+byte-identical, as described in
+[findings #7](findings.md#7-on-omarchy-the-boot-entry-writes-itself). Check
+anyway.
 
 ## Then reboot
 
@@ -96,13 +96,13 @@ uname -r                    # contains "-surface"
 ls /dev/hidraw*             # the touchscreen appears here
 ```
 
-Not `/dev/ipts*` — that is gone in iptsd 3.x. See
+Not `/dev/ipts*`, which is gone in iptsd 3.x. See
 [findings #8](findings.md#8-devipts-no-longer-exists).
 
 ## Making it the default
 
 Not yet. Give it several days of ordinary use first. When you are ready, do
-not edit `default_entry` — an update overwrites it. Use a drop-in:
+not edit `default_entry`, because an update overwrites it. Use a drop-in:
 
 ```sh
 sudo tee /etc/limine-entry-tool.d/zz-surface-first.conf <<'EOF'

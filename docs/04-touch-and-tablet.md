@@ -1,4 +1,4 @@
-# Step 4 — Touch and tablet mode
+# Step 4: Touch and tablet mode
 
 ```sh
 bash scripts/03-tablet-setup.sh
@@ -30,8 +30,8 @@ IPTSD Virtual Touchscreen 045E:0020   processed finger input
 IPTSD Virtual Stylus 045E:0020        the pen
 ```
 
-The middle step matters. For IPTS the kernel only delivers a raw sensor image
-— which areas are being pressed. `iptsd` turns that into fingers, palm
+The middle step matters. For IPTS the kernel only delivers a raw sensor image,
+meaning which areas are being pressed. `iptsd` turns that into fingers, palm
 rejection and stylus pressure in userspace. That is why the kernel alone is
 not enough.
 
@@ -46,8 +46,7 @@ touchscreen hardware
 
 ## What the script adds
 
-**Packages**, all from the official Arch repositories — nothing compiled, no
-AUR:
+Packages, all from the official Arch repositories. Nothing compiled, no AUR:
 
 | | |
 |---|---|
@@ -56,12 +55,12 @@ AUR:
 | `ydotool` | synthesises key combinations via `/dev/uinput` |
 
 Two tools for what looks like one job, because Wayland deliberately forbids
-one program sending keystrokes to another — that is how keyloggers work.
+one program sending keystrokes to another. That is how keyloggers work.
 `wtype` uses the `virtual-keyboard` protocol, which compositors allow for
 exactly this. `ydotool` goes through the kernel instead, which is needed for
 combinations the compositor grabs for itself, like `Super`+key.
 
-**Plugins** — three separate ones by [frostmute](https://github.com/frostmute):
+Three separate plugins by [frostmute](https://github.com/frostmute):
 
 | | |
 |---|---|
@@ -70,12 +69,11 @@ combinations the compositor grabs for itself, like `Super`+key.
 | Omaglide | virtual trackpad |
 
 Omablet only *launches* the other two. Installing it alone gives you rotation
-and no keyboard — see
-[findings #11](findings.md#11-small-things).
+and no keyboard. See [findings #11](findings.md#11-small-things).
 
-**A drop-in for iptsd** that keeps the touchscreen alive when an unrelated
-package installation reloads udev rules. Without it, touch dies silently after
-some future update. See
+A drop-in for iptsd keeps the touchscreen alive when an unrelated package
+installation reloads udev rules. Without it, touch dies silently after some
+future update. See
 [findings #9](findings.md#9-an-unrelated-update-silently-kills-the-touchscreen).
 
 ## The `input` group
@@ -85,25 +83,25 @@ asks before adding you, because it is a real change: members of `input` can
 read every device under `/dev/input/`, which means any program running as you
 could log your keystrokes.
 
-On a single-user laptop this is common — several distributions do it by
+On a single-user laptop this is common, and several distributions do it by
 default. Arch leaves it to you. Decline and the keyboard still types, but
 `Super`+key and the whole trackpad will not work.
 
-**It takes effect after a reboot, not after logging out** — see
+It takes effect after a reboot, not after logging out. See
 [findings #10](findings.md#10-logging-out-does-not-apply-a-group-change-when-autologin-is-on).
 
 ## Testing
 
 The keyboard can stay attached; no detaching needed.
 
-- **Omaqwerty** — tap the icon, type into a text field. Then try a `Super`
+- Omaqwerty: tap the icon, type into a text field. Then try a `Super`
   combination, which exercises ydotool specifically.
-- **Omaglide** — one finger moves the pointer, tap is left click, **two-finger
-  tap is right click**, two fingers dragging scrolls. Right click is something
-  a bare touchscreen cannot do at all.
-- **Omablet** — enable auto-rotate and tilt the device. Watch whether the
-  *touch input* rotates with the screen, not just the image. That is the part
-  that usually goes wrong.
+- Omaglide: one finger moves the pointer, tap is left click, two-finger tap is
+  right click, two fingers dragging scrolls. Right click is something a bare
+  touchscreen cannot do at all.
+- Omablet: enable auto-rotate and tilt the device. Watch whether the *touch
+  input* rotates with the screen, not just the image. That is the part that
+  usually goes wrong.
 
 ## What is not installed
 
